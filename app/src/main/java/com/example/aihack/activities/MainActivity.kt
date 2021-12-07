@@ -9,13 +9,6 @@ import com.example.aihack.CameraHelper
 import com.example.aihack.databinding.ActivityMainBinding
 import com.example.aihack.fragments.MainFragment
 
-class MainActivity : SingleFragmentActivity() {
-    override fun createFragment(): Fragment {
-        return MainFragment()
-    }
-
-}
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var cameraHelper: CameraHelper
