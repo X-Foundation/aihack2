@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AIHack">
         <activity
-            android:name=".FaceDetectionActivity"
+            android:name=".activities.FaceDetectionActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

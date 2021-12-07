@@ -1,4 +1,4 @@
-package com.example.aihack
+package com.example.aihack.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import com.google.mlkit.vision.common.InputImage
