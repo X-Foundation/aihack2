@@ -1,39 +1,40 @@
 package com.example.aihack.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.aihack.R
-import com.example.aihack.databinding.TestFragmentBinding
 import com.example.aihack.utils.CameraHelper
 
 class TestFragment : Fragment() {
-    private lateinit var binding: TestFragmentBinding
     private lateinit var cameraHelper: CameraHelper
+    private lateinit var safeContext: Context
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = TestFragmentBinding.inflate(LayoutInflater.from(requireActivity()))
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        safeContext = context
 
-        cameraHelper = CameraHelper(
-            owner = requireActivity() as AppCompatActivity,
-            context = requireContext(),
-            viewFinder = binding.cameraView,
-            onResult = ::onResult
-        )
-
-        cameraHelper.start()
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.test_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        cameraHelper = CameraHelper(
+            owner = requireActivity(),
+            context = safeContext,
+            viewFinder = view.findViewById(R.id.cameraView),
+            onResult = ::onResult
+        )
+        cameraHelper.start()
     }
 
     override fun onDestroy() {
