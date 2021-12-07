@@ -1,10 +1,7 @@
-package com.example.aihack.activities
-
-import androidx.appcompat.app.AppCompatActivity
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.*
 
-class FaceDetectionActivity : AppCompatActivity() {
+class FaceDetectionUtil{
 
     private fun detectFaces(image: InputImage) {
         val options = FaceDetectorOptions.Builder()

@@ -77,9 +77,7 @@ class CameraHelper(
 
     @SuppressLint("UnsafeOptInUsageError")
     fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
