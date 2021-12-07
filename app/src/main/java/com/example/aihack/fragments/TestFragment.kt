@@ -3,25 +3,28 @@ package com.example.aihack.fragments
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.media.MediaPlayer
-import android.media.MediaRecorder
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.PackageManagerCompat.LOG_TAG
 import androidx.fragment.app.Fragment
 import com.example.aihack.R
 import com.example.aihack.utils.CameraHelper
-import java.io.IOException
+import java.util.*
+
 
 class TestFragment : Fragment() {
     private lateinit var cameraHelper: CameraHelper
     private lateinit var safeContext: Context
+    private lateinit var speechRecognizer: SpeechRecognizer
+    private lateinit var speechRecognizerIntent: Intent
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,7 +41,6 @@ class TestFragment : Fragment() {
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fileName = "${requireActivity().externalCacheDir?.absolutePath}/audiorecordtest.3gp"
         val button = view.findViewById<Button>(R.id.button)
         val button2 = view.findViewById<Button>(R.id.button2)
         button.setOnClickListener{
@@ -56,6 +58,24 @@ class TestFragment : Fragment() {
             overlay = view.findViewById(R.id.graphicOverlay_finder)
         )
         cameraHelper.start()
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireActivity())
+        speechRecognizerIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        speechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale("ru_RU"))
+        speechRecognizer.setRecognitionListener(object : RecognitionListener {
+            override fun onReadyForSpeech(bundle: Bundle) {}
+            override fun onBeginningOfSpeech() {}
+            override fun onRmsChanged(v: Float) {}
+            override fun onBufferReceived(bytes: ByteArray) {}
+            override fun onEndOfSpeech() {}
+            override fun onError(i: Int) {}
+            override fun onResults(bundle: Bundle) {
+                val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                Toast.makeText(requireActivity(), data!![0], Toast.LENGTH_LONG).show()
+            }
+            override fun onPartialResults(bundle: Bundle) {}
+            override fun onEvent(i: Int, bundle: Bundle) {}
+        })
     }
 
     override fun onDestroy() {
@@ -70,67 +90,15 @@ class TestFragment : Fragment() {
     ) {
         cameraHelper.onRequestPermissionsResult(requestCode)
     }
-
-    private var fileName: String = ""
-
-    private var recorder: MediaRecorder? = null
-
-
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
-
-//    override fun onRequestPermissionsResult(
-//        requestCode: Int,
-//        permissions: Array<String>,
-//        grantResults: IntArray
-//    ) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-//        permissionToRecordAccepted = if (requestCode == REQUEST_RECORD_AUDIO_PERMISSION) {
-//            grantResults[0] == PackageManager.PERMISSION_GRANTED
-//        } else {
-//            false
-//        }
-//        if (!permissionToRecordAccepted) finish()
-//    }
-
-    private fun onRecord(start: Boolean) = if (start) {
-        startRecording()
-    } else {
-        stopRecording()
-    }
 
     @SuppressLint("RestrictedApi")
     private fun startRecording() {
-        recorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(fileName)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-
-            try {
-                prepare()
-            } catch (e: IOException) {
-                Log.e(LOG_TAG, "prepare() failed")
-            }
-
-            start()
-            Log.d("START", "START")
-        }
+        speechRecognizer.startListening(speechRecognizerIntent)
     }
 
     private fun stopRecording() {
-        recorder?.apply {
-            stop()
-            release()
-        }
-        recorder = null
-        Log.d("STOP", "STOP")
-    }
-
-
-    override fun onStop() {
-        super.onStop()
-        recorder?.release()
-        recorder = null
+        speechRecognizer.stopListening()
     }
 
     companion object {
