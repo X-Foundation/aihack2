@@ -30,11 +30,6 @@ class CameraHelper(
 
     private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
 
-    private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
-    private var camera: Camera? = null
-    private var cameraProvider: ProcessCameraProvider? = null
-
-
     fun start() {
         if (allPermissionsGranted()) {
             startCamera()
@@ -44,71 +39,30 @@ class CameraHelper(
     }
 
     fun stop() {
-        cameraExecutor.shutdown()
+        cameraExecutor.shutdownNow()
     }
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+
         cameraProviderFuture.addListener({
-
-            cameraProvider = cameraProviderFuture.get()
-
-            lensFacing = when {
-                hasBackCamera() -> CameraSelector.LENS_FACING_BACK
-                hasFrontCamera() -> CameraSelector.LENS_FACING_FRONT
-                else -> throw IllegalStateException("Back and front camera are unavailable")
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder()
+                .build()
+                .also {
+                    it.setSurfaceProvider(viewFinder.surfaceProvider)
+                }
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(
+                    owner, cameraSelector, preview
+                )
+            } catch (exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
             }
-            bindCameraUseCases()
+
         }, ContextCompat.getMainExecutor(context))
-    }
-
-    private fun bindCameraUseCases() {
-
-        val cameraProvider =
-            cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
-
-        val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
-        val previewView = getPreviewUseCase()
-
-        cameraProvider.unbindAll()
-
-        try {
-            camera = cameraProvider.bindToLifecycle(
-                owner,
-                cameraSelector,
-                previewView,
-            )
-
-            previewView.setSurfaceProvider(viewFinder.surfaceProvider)
-
-        } catch (exc: Exception) {
-            Log.e(TAG, "Use case binding failed $exc")
-        }
-    }
-
-    private fun aspectRatio(): Int {
-        with(DisplayMetrics().also { viewFinder.display.getRealMetrics(it) }) {
-            val previewRatio = max(widthPixels, heightPixels).toDouble() / widthPixels.coerceAtMost(
-                heightPixels
-            )
-            if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
-                return AspectRatio.RATIO_4_3
-            }
-            return AspectRatio.RATIO_16_9
-        }
-    }
-
-    private fun hasBackCamera() =
-        cameraProvider?.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) ?: false
-
-    private fun hasFrontCamera() =
-        cameraProvider?.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA) ?: false
-
-    private fun getPreviewUseCase(): Preview {
-        return Preview.Builder()
-            .setTargetAspectRatio(aspectRatio())
-            .setTargetRotation(viewFinder.display.rotation)
-            .build()
     }
 
     fun onRequestPermissionsResult(
@@ -144,7 +98,5 @@ class CameraHelper(
     companion object {
         const val REQUEST_CODE_PERMISSIONS = 42
         val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private const val RATIO_4_3_VALUE = 4.0 / 3.0
-        private const val RATIO_16_9_VALUE = 16.0 / 9.0
     }
 }
