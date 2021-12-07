@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.aihack.R
 
 class TrainerFragment : Fragment() {
@@ -13,6 +16,38 @@ class TrainerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.account_fragment, container, false)
+        return inflater.inflate(R.layout.trainer_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        recyclerView.adapter = RecyclerViewAdapter()
+    }
+
+    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
+        private val trainerList = arrayListOf("Уровень 1", "Уровень 2", "Уровень 3", "Уровень 4", "Уровень 5", "Уровень 6")
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
+            val layoutInflater = LayoutInflater.from(parent.context)
+            return RecyclerViewHolder(layoutInflater, parent)
+        }
+
+        override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
+            holder.bind(trainerList[position])
+        }
+
+        override fun getItemCount(): Int {
+            return trainerList.size
+        }
+
+        inner class RecyclerViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup) :
+            RecyclerView.ViewHolder(inflater.inflate(R.layout.trainer_recycler_view_item, viewGroup, false)) {
+                fun bind(title: String) {
+                    val trainerTitle = itemView.findViewById<TextView>(R.id.trainer_title)
+                    trainerTitle.text = title
+
+                }
+            }
     }
 }
