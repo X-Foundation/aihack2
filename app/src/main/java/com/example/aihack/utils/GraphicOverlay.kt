@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.PointF
-import android.graphics.Rect
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import androidx.camera.core.CameraSelector
@@ -19,7 +17,7 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
     var mScale: Float? = null
     var mOffsetX: Float? = null
     var mOffsetY: Float? = null
-    var cameraSelector: Int = CameraSelector.LENS_FACING_FRONT
+    private var cameraSelector: Int = CameraSelector.LENS_FACING_FRONT
 
     abstract class Graphic(private val overlay: GraphicOverlay) {
 
@@ -32,14 +30,14 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
             }
 
             fun whenLandScapeModeWidth(): Float {
-                return when(isLandScapeMode()) {
+                return when (isLandScapeMode()) {
                     true -> width
                     false -> height
                 }
             }
 
             fun whenLandScapeModeHeight(): Float {
-                return when(isLandScapeMode()) {
+                return when (isLandScapeMode()) {
                     true -> height
                     false -> width
                 }
@@ -52,7 +50,8 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
 
             // Calculate offset (we need to center the overlay on the target)
             val offsetX = (overlay.width.toFloat() - ceil(whenLandScapeModeWidth() * scale)) / 2.0f
-            val offsetY = (overlay.height.toFloat() - ceil(whenLandScapeModeHeight() * scale)) / 2.0f
+            val offsetY =
+                (overlay.height.toFloat() - ceil(whenLandScapeModeHeight() * scale)) / 2.0f
 
             overlay.mOffsetX = offsetX
             overlay.mOffsetY = offsetY
@@ -70,8 +69,6 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
                 val centerX = overlay.width.toFloat() / 2
                 for (point in pointList) {
                     point[0] = centerX + (centerX - point[0])
-                    point[1] = centerX - (point[1] - centerX)
-
                 }
             }
             return pointList
@@ -80,12 +77,6 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
 
     fun isFrontMode() = cameraSelector == CameraSelector.LENS_FACING_FRONT
 
-    fun toggleSelector() {
-        cameraSelector =
-            if (cameraSelector == CameraSelector.LENS_FACING_BACK) CameraSelector.LENS_FACING_FRONT
-            else CameraSelector.LENS_FACING_BACK
-    }
-
     fun clear() {
         synchronized(lock) { graphics.clear() }
         postInvalidate()
@@ -93,11 +84,6 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
 
     fun add(graphic: Graphic) {
         synchronized(lock) { graphics.add(graphic) }
-    }
-
-    fun remove(graphic: Graphic) {
-        synchronized(lock) { graphics.remove(graphic) }
-        postInvalidate()
     }
 
     override fun onDraw(canvas: Canvas?) {

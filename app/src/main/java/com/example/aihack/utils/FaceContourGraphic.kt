@@ -32,8 +32,10 @@ class FaceContourGraphic(
     override fun draw(canvas: Canvas?) {
         for (contour in 8..11) {
             val values = face.getContour(contour)!!.points
-            val paths = calculatePath(imageRect.height().toFloat(),
-                imageRect.width().toFloat(), values)
+            val paths = calculatePath(
+                imageRect.height().toFloat(),
+                imageRect.width().toFloat(), values
+            )
             val path = Path()
             for (i in 0 until paths.count() - 1) {
                 path.moveTo(paths[i][0], paths[i][1])

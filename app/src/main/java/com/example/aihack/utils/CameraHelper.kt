@@ -65,7 +65,6 @@ class CameraHelper(
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
             }
-
         }, ContextCompat.getMainExecutor(context))
     }
 
