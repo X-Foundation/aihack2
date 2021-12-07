@@ -48,7 +48,7 @@ class CameraHelper(
                 .also {
                     it.setSurfaceProvider(viewFinder.surfaceProvider)
                 }
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(
