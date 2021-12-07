@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.example.aihack.CameraHelper
 import com.example.aihack.databinding.ActivityMainBinding
-import com.example.aihack.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
