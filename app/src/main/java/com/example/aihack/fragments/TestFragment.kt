@@ -17,8 +17,8 @@ class TestFragment : Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         safeContext = context
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +32,7 @@ class TestFragment : Fragment() {
             owner = requireActivity(),
             context = safeContext,
             viewFinder = view.findViewById(R.id.cameraView),
+            overlay = view.findViewById(R.id.graphicOverlay_finder),
             onResult = ::onResult
         )
         cameraHelper.start()
