@@ -1,10 +1,8 @@
 package com.example.aihack.utils
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
 import com.google.mlkit.vision.face.Face
+import com.google.mlkit.vision.face.FaceContour
 
 class FaceContourGraphic(
     overlay: GraphicOverlay,
@@ -32,12 +30,18 @@ class FaceContourGraphic(
     }
 
     override fun draw(canvas: Canvas?) {
-        val rect = calculateRect(
-            imageRect.height().toFloat(),
-            imageRect.width().toFloat(),
-            face.boundingBox
-        )
-        canvas?.drawRect(rect, boxPaint)
+        for (contour in 8..11) {
+            val values = face.getContour(contour)!!.points
+            val paths = calculatePath(imageRect.height().toFloat(),
+                imageRect.width().toFloat(), values)
+            val path = Path()
+            for (i in 0 until paths.count() - 1) {
+                path.moveTo(paths[i][0], paths[i][1])
+                path.lineTo(paths[i + 1][0], paths[i + 1][1])
+            }
+            canvas?.drawPath(path, boxPaint)
+            path.close()
+        }
     }
 
     companion object {

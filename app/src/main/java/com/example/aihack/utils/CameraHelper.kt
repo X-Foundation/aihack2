@@ -15,7 +15,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.aihack.fragments.TestFragment.Companion.TAG
-import com.google.mlkit.vision.face.FaceContour
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -25,7 +24,6 @@ class CameraHelper(
     private val context: Context,
     private val viewFinder: PreviewView,
     private val overlay: GraphicOverlay,
-    private val onResult: (result: String) -> Unit
 ) {
 
     private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()

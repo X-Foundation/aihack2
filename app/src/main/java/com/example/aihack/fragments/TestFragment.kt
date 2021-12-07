@@ -31,8 +31,7 @@ class TestFragment : Fragment() {
             owner = requireActivity(),
             context = safeContext,
             viewFinder = view.findViewById(R.id.cameraView),
-            overlay = view.findViewById(R.id.graphicOverlay_finder),
-            onResult = ::onResult
+            overlay = view.findViewById(R.id.graphicOverlay_finder)
         )
         cameraHelper.start()
     }

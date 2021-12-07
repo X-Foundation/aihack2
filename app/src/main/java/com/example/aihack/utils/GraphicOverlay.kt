@@ -3,6 +3,7 @@ package com.example.aihack.utils
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Canvas
+import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
 import android.util.AttributeSet
@@ -24,8 +25,7 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
 
         abstract fun draw(canvas: Canvas?)
 
-        fun calculateRect(height: Float, width: Float, boundingBoxT: Rect): RectF {
-
+        fun calculatePath(height: Float, width: Float, points: List<PointF>): List<List<Float>> {
             // for land scape
             fun isLandScapeMode(): Boolean {
                 return overlay.context.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
@@ -57,22 +57,24 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
             overlay.mOffsetX = offsetX
             overlay.mOffsetY = offsetY
 
-            val mappedBox = RectF().apply {
-                left = boundingBoxT.right * scale + offsetX
-                top = boundingBoxT.top * scale + offsetY
-                right = boundingBoxT.left * scale + offsetX
-                bottom = boundingBoxT.bottom * scale + offsetY
+            val pointList = ArrayList<ArrayList<Float>>()
+            for (point in points) {
+                val x = point.x * scale + offsetX
+                val y = point.y * scale + offsetY
+                pointList.add(arrayListOf(x, y))
+
             }
 
             // for front mode
             if (overlay.isFrontMode()) {
                 val centerX = overlay.width.toFloat() / 2
-                mappedBox.apply {
-                    left = centerX + (centerX - left)
-                    right = centerX - (right - centerX)
+                for (point in pointList) {
+                    point[0] = centerX + (centerX - point[0])
+                    point[1] = centerX - (point[1] - centerX)
+
                 }
             }
-            return mappedBox
+            return pointList
         }
     }
 
