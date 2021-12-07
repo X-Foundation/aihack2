@@ -2,7 +2,6 @@ package com.example.aihack.fragments
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ class TestFragment : Fragment() {
             owner = requireActivity(),
             context = safeContext,
             viewFinder = view.findViewById(R.id.cameraView),
-            onResult = ::onResult
         )
         cameraHelper.start()
     }
@@ -42,16 +40,12 @@ class TestFragment : Fragment() {
         cameraHelper.stop()
     }
 
-    private fun onResult(result: String) {
-        Log.d(TAG, "Result is $result")
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
         grantResults: IntArray
     ) {
-        cameraHelper.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        cameraHelper.onRequestPermissionsResult(requestCode)
     }
 
     companion object {

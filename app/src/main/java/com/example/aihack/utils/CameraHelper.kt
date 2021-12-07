@@ -21,7 +21,6 @@ class CameraHelper(
     private val owner: FragmentActivity,
     private val context: Context,
     private val viewFinder: PreviewView,
-    private val onResult: (result: String) -> Unit
 ) {
 
     private var cameraExecutor: ExecutorService = Executors.newSingleThreadExecutor()
@@ -62,9 +61,7 @@ class CameraHelper(
     }
 
     fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int
     ) {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
