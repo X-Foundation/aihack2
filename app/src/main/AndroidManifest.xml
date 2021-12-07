@@ -3,6 +3,8 @@
     package="com.example.aihack">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -13,9 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AIHack">
-        <activity
-            android:name=".activities.FaceDetectionActivity"
-            android:exported="false" />
+
         <activity
             android:name=".activities.TestActivity"
             android:exported="true"/>
