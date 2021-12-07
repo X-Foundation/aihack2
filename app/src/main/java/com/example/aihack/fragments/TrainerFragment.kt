@@ -1,14 +1,17 @@
 package com.example.aihack.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aihack.R
+import com.example.aihack.activities.TestActivity
 
 class TrainerFragment : Fragment() {
     override fun onCreateView(
@@ -42,12 +45,15 @@ class TrainerFragment : Fragment() {
         }
 
         inner class RecyclerViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup) :
-            RecyclerView.ViewHolder(inflater.inflate(R.layout.trainer_recycler_view_item, viewGroup, false)) {
+            RecyclerView.ViewHolder(inflater.inflate(R.layout.trainer_recycler_view_item, viewGroup, false)){
                 fun bind(title: String) {
                     val trainerTitle = itemView.findViewById<TextView>(R.id.trainer_title)
                     trainerTitle.text = title
-
+                    itemView.setOnClickListener {
+                        val intent = Intent(requireActivity(), TestActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
-            }
+        }
     }
 }

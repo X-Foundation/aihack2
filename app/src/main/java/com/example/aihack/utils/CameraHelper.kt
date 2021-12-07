@@ -1,4 +1,4 @@
-package com.example.aihack
+package com.example.aihack.utils
 
 import android.Manifest
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
@@ -14,15 +15,14 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.aihack.activities.MainActivity.Companion.TAG
-import com.example.aihack.fragments.TestFragment
+import com.example.aihack.fragments.TestFragment.Companion.TAG
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import kotlin.math.abs
 import kotlin.math.max
 
 class CameraHelper(
-    private val owner: TestFragment,
+    private val owner: AppCompatActivity,
     private val context: Context,
     private val viewFinder: PreviewView,
     private val onResult: (result: String) -> Unit

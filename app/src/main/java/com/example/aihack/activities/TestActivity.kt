@@ -1,11 +1,10 @@
 package com.example.aihack.activities
 
 import androidx.fragment.app.Fragment
-import com.example.aihack.fragments.MainFragment
+import com.example.aihack.fragments.TestFragment
 
-class MainActivity : SingleFragmentActivity() {
+class TestActivity : SingleFragmentActivity() {
     override fun createFragment(): Fragment {
-        return MainFragment()
+        return TestFragment()
     }
-
 }

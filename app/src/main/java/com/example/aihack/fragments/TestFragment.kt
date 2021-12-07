@@ -6,44 +6,40 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.aihack.CameraHelper
+import androidx.appcompat.app.AppCompatActivity
+import com.example.aihack.utils.CameraHelper
 import com.example.aihack.R
-import com.example.aihack.databinding.ActivityMainBinding
+import com.example.aihack.databinding.TestFragmentBinding
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class TestFragment : Fragment() {
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: TestFragmentBinding
     private lateinit var cameraHelper: CameraHelper
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+        binding = TestFragmentBinding.inflate(LayoutInflater.from(requireActivity()))
 
         cameraHelper = CameraHelper(
-            owner = this,
-            context = this.applicationContext,
+            owner = requireActivity() as AppCompatActivity,
+            context = requireContext(),
             viewFinder = binding.cameraView,
             onResult = ::onResult
         )
 
         cameraHelper.start()
-
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_test, container, false)
+        return inflater.inflate(R.layout.test_fragment, container, false)
     }
 
     private fun onResult(result: String) {
         Log.d(TAG, "Result is $result")
-        binding.textResult.text = result
     }
 
     override fun onRequestPermissionsResult(
