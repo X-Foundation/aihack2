@@ -15,6 +15,7 @@ import com.example.aihack.R
 import com.example.aihack.activities.TrainerActivity
 import com.example.aihack.models.Test
 import com.example.aihack.utils.GridSpacingItemDecoration
+import com.example.aihack.utils.GsonParser
 
 
 class LevelFragment : Fragment() {
@@ -58,10 +59,12 @@ class LevelFragment : Fragment() {
                 val trainerLock = itemView.findViewById<ImageView>(R.id.lock)
                 val title = "Уровень " + test.level
                 trainerTitle.text = title
-                if(test.level.toString() !in blocked)
+                val xp = GsonParser.getInstance(requireActivity()).getAllXp()
+                val check = GsonParser.getInstance(requireActivity()).getAllXp() >= (test.level - 1) * 8 || test.level == 1
+                if(check)
                     trainerLock.visibility = View.INVISIBLE
                 itemView.setOnClickListener {
-                    if(test.level.toString() !in blocked) {
+                    if(check) {
                         val intent = Intent(requireActivity(), TrainerActivity::class.java)
                         intent.putExtra("level", test.level)
                         startActivity(intent)

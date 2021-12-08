@@ -11,8 +11,8 @@ import android.content.SharedPreferences.Editor
 
 
 class GsonParser(activity: FragmentActivity) {
-    private lateinit var testList: TestList
-    private lateinit var xpList: XpList
+    private var testList: TestList
+    private var xpList: XpList
     
     init {
         val gson = Gson()
@@ -39,6 +39,14 @@ class GsonParser(activity: FragmentActivity) {
             }
         }
         return null
+    }
+
+    fun getAllXp(): Int {
+        var counter = 0
+        for (t in xpList.list) {
+            counter += t.xp
+        }
+        return counter
     }
 
     fun addXp(level: Int, test: Int, xp: Int, activity: FragmentActivity) {
