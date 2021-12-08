@@ -62,8 +62,8 @@ class TrainerFragment : Fragment() {
                 val xpTestTextView = itemView.findViewById<TextView>(R.id.xpTestTextView)
                 val title = "Тест " + test.test
                 trainerTitle.text = title
-                val text = GsonParser.instance.getXp(test.level, test.test)
-                val testCount = GsonParser.instance.getTest(test.level, test.test)?.split(' ')?.size
+                val text = GsonParser.getInstance(requireActivity()).getXp(test.level, test.test)
+                val testCount = GsonParser.getInstance(requireActivity()).getTest(test.level, test.test)?.split(' ')?.size
                 if (text == null)
                     xpTestTextView.text = ("0/$testCount")
                 else
