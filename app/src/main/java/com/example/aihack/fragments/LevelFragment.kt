@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aihack.R
 import com.example.aihack.activities.TrainerActivity
+import com.example.aihack.models.Test
 import com.example.aihack.utils.GridSpacingItemDecoration
 
 
@@ -31,14 +32,14 @@ class LevelFragment : Fragment() {
 
     }
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
-        private val trainerList = Array(3) {i -> "Уровень ${i+1}"}
+        private val trainerList = Array(3) {i -> i + 1}
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return RecyclerViewHolder(layoutInflater, parent)
         }
 
         override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-            holder.bind(trainerList[position])
+            holder.bind(Test(trainerList[position], 0, ""))
         }
 
         override fun getItemCount(): Int {
@@ -47,11 +48,13 @@ class LevelFragment : Fragment() {
 
         inner class RecyclerViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup) :
             RecyclerView.ViewHolder(inflater.inflate(R.layout.level_gridview_item, viewGroup, false)){
-            fun bind(title: String) {
+            fun bind(test: Test) {
                 val trainerTitle = itemView.findViewById<TextView>(R.id.level_title)
+                val title = "Уровень" + test.level
                 trainerTitle.text = title
                 itemView.setOnClickListener {
                     val intent = Intent(requireActivity(), TrainerActivity::class.java)
+                    intent.putExtra("level", test.level)
                     startActivity(intent)
                 }
             }

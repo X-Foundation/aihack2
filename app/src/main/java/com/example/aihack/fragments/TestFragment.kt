@@ -18,6 +18,7 @@ import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 
 import android.text.SpannableStringBuilder
+import com.example.aihack.utils.GsonParser
 
 
 class TestFragment : Fragment() {
@@ -41,12 +42,15 @@ class TestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val textView = view.findViewById<TextView>(R.id.textView2)
-        textView.text = SENTENCE
+        val level = requireActivity().intent.getIntExtra("level", 0)
+        val testNumber = requireActivity().intent.getIntExtra("test", 0)
+        val testText = GsonParser(requireActivity()).getTest(level, testNumber)
+        textView.text = testText
         val button = view.findViewById<Button>(R.id.button)
         voiceHelper = VoiceHelper(requireActivity(), onResult = {
             val recognized = it.lowercase().replace('с', 'c').replace('c', 'с')
             val split1 = recognized.split(' ')
-            val splitRight = SENTENCE.split(' ')
+            val splitRight = testText!!.split(' ')
             val builder = SpannableStringBuilder()
             for ((idx, i) in splitRight.withIndex()) {
                 var text = i
@@ -90,6 +94,5 @@ class TestFragment : Fragment() {
 
     companion object {
         const val TAG = "CameraXDemo"
-        const val SENTENCE = "какая сегодня хорошая погода"
     }
 }
