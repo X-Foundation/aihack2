@@ -12,7 +12,8 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 
 class VoiceHelper(
-    private val owner: FragmentActivity
+    private val owner: FragmentActivity,
+    private val onResult: (result: String) -> Unit
 ) {
     private var speechRecognizer: SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(owner)
     private var speechRecognizerIntent: Intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
@@ -37,6 +38,7 @@ class VoiceHelper(
             override fun onResults(bundle: Bundle) {
                 val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 Toast.makeText(owner, data!![0], Toast.LENGTH_LONG).show()
+                onResult(data[0])
             }
 
             override fun onPartialResults(bundle: Bundle) {}
