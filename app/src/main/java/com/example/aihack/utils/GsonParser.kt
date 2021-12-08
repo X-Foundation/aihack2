@@ -58,8 +58,8 @@ class GsonParser(activity: FragmentActivity) {
                 flag = true
                 break
             }
-        if(!flag)
-        xpList.list.add(Xp(level, test, xp))
+        if (!flag)
+            xpList.list.add(Xp(level, test, xp))
         saveXp(xpList, activity)
     }
 
