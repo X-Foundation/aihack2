@@ -13,16 +13,17 @@ import android.content.SharedPreferences.Editor
 class GsonParser(activity: FragmentActivity) {
     private var testList: TestList
     private var xpList: XpList
-    
+
     init {
         val gson = Gson()
         val reader = JsonReader(activity.assets.open("tests.json").bufferedReader())
         testList = gson.fromJson(reader, TestList::class.java)
-        val sharedPref = activity.applicationContext.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
+        val sharedPref =
+            activity.applicationContext.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
         val prefs = sharedPref.getString("xp", "{'list': []}").toString()
         xpList = gson.fromJson(prefs, XpList::class.java)
     }
-    
+
     fun getTest(level: Int, test: Int): String? {
         for (t in testList.list) {
             if (t.level == level && t.test == test) {
@@ -50,6 +51,14 @@ class GsonParser(activity: FragmentActivity) {
     }
 
     fun addXp(level: Int, test: Int, xp: Int, activity: FragmentActivity) {
+        var flag = false
+        for (element in xpList.list)
+            if (element.level == level && element.test == test) {
+                element.xp = xp
+                flag = true
+                break
+            }
+        if(!flag)
         xpList.list.add(Xp(level, test, xp))
         saveXp(xpList, activity)
     }
@@ -57,14 +66,16 @@ class GsonParser(activity: FragmentActivity) {
     private fun saveXp(xpList: XpList, activity: FragmentActivity) {
         val gson = Gson()
         val json: String = gson.toJson(xpList)
-        val sharedPref = activity.applicationContext.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
+        val sharedPref =
+            activity.applicationContext.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
         val editor: Editor = sharedPref.edit()
         editor.putString("xp", json)
         editor.apply()
     }
 
     companion object {
-        @Volatile private var INSTANCE: GsonParser? = null
+        @Volatile
+        private var INSTANCE: GsonParser? = null
 
         fun getInstance(activity: FragmentActivity): GsonParser =
             INSTANCE ?: synchronized(this) {

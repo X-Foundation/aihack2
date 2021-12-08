@@ -1,6 +1,5 @@
 package com.example.aihack.fragments
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -25,14 +24,11 @@ class LevelFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.level_fragment, container, false)
     }
-    private lateinit var blocked: String
     private lateinit var recyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        blocked = sharedPref.getString("blocked", "23").toString()
-        recyclerView = view.findViewById<RecyclerView>(R.id.level_recycler_view)
+        recyclerView = view.findViewById(R.id.level_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 32, true))
         recyclerView.adapter = RecyclerViewAdapter()
