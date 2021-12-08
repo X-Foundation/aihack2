@@ -17,7 +17,7 @@ class GsonParser {
         val reader = JsonReader(activity.assets.open("tests.json").bufferedReader())
         testList = gson.fromJson(reader, TestList::class.java)
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-        val prefs = sharedPref.getString("xp", "{}").toString()
+        val prefs = sharedPref.getString("xp", "{'list': []}").toString()
         xpList = gson.fromJson(prefs, XpList::class.java)
     }
     
@@ -31,7 +31,6 @@ class GsonParser {
     }
 
     fun getXp(level: Int, test: Int): Int? {
-        if(xpList.list != null)
         for (t in xpList.list) {
             if (t.level == level && t.test == test) {
                 return t.xp
@@ -48,10 +47,10 @@ class GsonParser {
     private fun saveXp(xpList: XpList, activity: FragmentActivity) {
         val gson = Gson()
         val json: String = gson.toJson(xpList)
-        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return
+        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
             putString("xp", json)
-            apply()
+            commit()
         }
     }
 
