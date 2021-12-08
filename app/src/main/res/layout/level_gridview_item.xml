@@ -4,11 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusable="true"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:clickable="true">
 
     <TextView
-        android:id="@+id/trainer_title"
+        android:id="@+id/level_tile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

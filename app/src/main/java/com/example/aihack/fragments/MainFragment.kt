@@ -27,7 +27,7 @@ class MainFragment : Fragment() {
                     true
                 }
                 R.id.trainer -> {
-                    setFragment(TrainerFragment())
+                    setFragment(LevelFragment())
                     true
                 }
                 else -> false
