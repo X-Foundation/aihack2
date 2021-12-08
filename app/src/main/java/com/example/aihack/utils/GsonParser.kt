@@ -73,6 +73,15 @@ class GsonParser(activity: FragmentActivity) {
         editor.apply()
     }
 
+    fun getLevel(): Int {
+        val xp = getAllXp()
+        return when {
+            xp < 10 -> 1
+            xp in 10..29 -> 2
+            else -> 3
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: GsonParser? = null
