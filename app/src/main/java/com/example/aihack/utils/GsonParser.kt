@@ -18,4 +18,7 @@ class GsonParser(private val activity: FragmentActivity) {
         return null
     }
 
+    fun getXp(){
+
+    }
 }

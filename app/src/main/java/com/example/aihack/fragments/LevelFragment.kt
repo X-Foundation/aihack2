@@ -61,9 +61,11 @@ class LevelFragment : Fragment() {
                 if(test.level.toString() !in blocked)
                     trainerLock.visibility = View.INVISIBLE
                 itemView.setOnClickListener {
-                    val intent = Intent(requireActivity(), TrainerActivity::class.java)
-                    intent.putExtra("level", test.level)
-                    startActivity(intent)
+                    if(test.level.toString() !in blocked) {
+                        val intent = Intent(requireActivity(), TrainerActivity::class.java)
+                        intent.putExtra("level", test.level)
+                        startActivity(intent)
+                    }
                 }
             }
         }
