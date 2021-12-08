@@ -1,10 +1,12 @@
 package com.example.aihack.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,9 +24,12 @@ class LevelFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.level_fragment, container, false)
     }
+    private lateinit var blocked: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
+        blocked = sharedPref.getString("blocked", "23").toString()
         val recyclerView = view.findViewById<RecyclerView>(R.id.level_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 32, true))
@@ -50,8 +55,10 @@ class LevelFragment : Fragment() {
             RecyclerView.ViewHolder(inflater.inflate(R.layout.level_gridview_item, viewGroup, false)){
             fun bind(test: Test) {
                 val trainerTitle = itemView.findViewById<TextView>(R.id.level_title)
+                val trainerLock = itemView.findViewById<ImageView>(R.id.lock)
                 val title = "Уровень " + test.level
                 trainerTitle.text = title
+                trainerLock.visibility = (test.level.toString() in blocked).compareTo(false)
                 itemView.setOnClickListener {
                     val intent = Intent(requireActivity(), TrainerActivity::class.java)
                     intent.putExtra("level", test.level)

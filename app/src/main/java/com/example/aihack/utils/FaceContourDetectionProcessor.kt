@@ -54,5 +54,4 @@ class FaceContourDetectionProcessor(private val view: GraphicOverlay) :
     companion object {
         private const val TAG = "FaceDetectorProcessor"
     }
-
 }
