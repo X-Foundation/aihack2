@@ -3,6 +3,7 @@ package com.example.aihack.utils
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import com.example.aihack.models.TestList
+import com.example.aihack.models.Xp
 import com.example.aihack.models.XpList
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
@@ -39,7 +40,12 @@ class GsonParser {
         return null
     }
 
-    fun saveXp(xpList: XpList, activity: FragmentActivity) {
+    fun addXp(level: Int, test: Int, xp: Int, activity: FragmentActivity) {
+        xpList.list.add(Xp(level, test, xp))
+        saveXp(xpList, activity)
+    }
+
+    private fun saveXp(xpList: XpList, activity: FragmentActivity) {
         val gson = Gson()
         val json: String = gson.toJson(xpList)
         val sharedPref = activity.getPreferences(Context.MODE_PRIVATE) ?: return

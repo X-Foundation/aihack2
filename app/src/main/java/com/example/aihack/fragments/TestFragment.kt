@@ -82,6 +82,7 @@ class TestFragment : Fragment() {
                     .addSizes(Size(12))
                     .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
                     .streamFor(300, 5000L)
+                GsonParser.instance.addXp(level, testNumber, counter, requireActivity())
             }
         })
         button.setOnClickListener {
