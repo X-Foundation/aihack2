@@ -24,6 +24,7 @@ class LevelFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.level_fragment, container, false)
     }
+
     private lateinit var recyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,8 +40,10 @@ class LevelFragment : Fragment() {
         super.onResume()
         updateUI()
     }
-    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
-        private val trainerList = Array(3) {i -> i + 1}
+
+    inner class RecyclerViewAdapter :
+        RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
+        private val trainerList = Array(3) { i -> i + 1 }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return RecyclerViewHolder(layoutInflater, parent)
@@ -55,17 +58,31 @@ class LevelFragment : Fragment() {
         }
 
         inner class RecyclerViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup) :
-            RecyclerView.ViewHolder(inflater.inflate(R.layout.level_gridview_item, viewGroup, false)){
+            RecyclerView.ViewHolder(
+                inflater.inflate(
+                    R.layout.level_gridview_item,
+                    viewGroup,
+                    false
+                )
+            ) {
             fun bind(test: Test) {
                 val trainerTitle = itemView.findViewById<TextView>(R.id.level_title)
                 val trainerLock = itemView.findViewById<ImageView>(R.id.lock)
+                val xpTitle = itemView.findViewById<TextView>(R.id.xpLevelTextView)
                 val title = "Уровень " + test.level
                 trainerTitle.text = title
-                val check = GsonParser.getInstance(requireActivity()).getAllXp() >= (test.level - 1) * 8 || test.level == 1
-                if(check)
+                val check = GsonParser.getInstance(requireActivity())
+                    .getAllXp() >= (test.level - 1) * 8 || test.level == 1
+                if (check) {
                     trainerLock.visibility = View.INVISIBLE
+                    xpTitle.text = ("${
+                        GsonParser.getInstance(requireActivity()).getAllLevelXp(test.level)
+                    }/${
+                        GsonParser.getInstance(requireActivity()).getAllPossibleLevelXp(test.level)
+                    }")
+                }
                 itemView.setOnClickListener {
-                    if(check) {
+                    if (check) {
                         val intent = Intent(requireActivity(), TrainerActivity::class.java)
                         intent.putExtra("level", test.level)
                         startActivity(intent)
@@ -74,6 +91,7 @@ class LevelFragment : Fragment() {
             }
         }
     }
+
     private fun updateUI() {
         recyclerView.adapter = RecyclerViewAdapter()
     }
