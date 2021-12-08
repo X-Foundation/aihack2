@@ -47,7 +47,7 @@ class TestFragment : Fragment() {
         val textView = view.findViewById<TextView>(R.id.textView2)
         val level = requireActivity().intent.getIntExtra("level", 0)
         val testNumber = requireActivity().intent.getIntExtra("test", 0)
-        val testText = GsonParser(requireActivity()).getTest(level, testNumber)
+        val testText = GsonParser.instance.getTest(level, testNumber)
         textView.text = testText
         val button = view.findViewById<Button>(R.id.button)
         voiceHelper = VoiceHelper(requireActivity(), onResult = {
