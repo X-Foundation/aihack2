@@ -63,10 +63,11 @@ class TrainerFragment : Fragment() {
                 val title = "Тест " + test.test
                 trainerTitle.text = title
                 val text = GsonParser.instance.getXp(test.level, test.test)
+                val testCount = GsonParser.instance.getTest(test.level, test.test)?.split(' ')?.size
                 if (text == null)
-                    xpTestTextView.text = "0/10"
+                    xpTestTextView.text = ("0/$testCount")
                 else
-                    xpTestTextView.text = ("$text/10")
+                    xpTestTextView.text = ("$text/$testCount")
                 itemView.setOnClickListener {
                     val intent = Intent(requireActivity(), TestActivity::class.java)
                     intent.putExtra("level", test.level)
