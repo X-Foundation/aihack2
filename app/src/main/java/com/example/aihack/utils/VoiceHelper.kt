@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 
@@ -33,7 +34,13 @@ class VoiceHelper(
             override fun onRmsChanged(v: Float) {}
             override fun onBufferReceived(bytes: ByteArray) {}
             override fun onEndOfSpeech() {}
-            override fun onError(i: Int) {}
+            override fun onError(i: Int) {
+                if(FaceContourGraphic.MOUTH_OPENED){
+                    Toast.makeText(owner, "Вас не слышно", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(owner, "Попробуйте открыть рот", Toast.LENGTH_SHORT).show()
+                }
+            }
             override fun onResults(bundle: Bundle) {
                 val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                 onResult(data!![0])

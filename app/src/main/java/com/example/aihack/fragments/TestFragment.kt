@@ -70,11 +70,6 @@ class TestFragment : Fragment() {
                     str1.setSpan(ForegroundColorSpan(Color.GREEN), 0, str1.length, 0)
                 } else {
                     str1.setSpan(ForegroundColorSpan(Color.RED), 0, str1.length, 0)
-                    if(FaceContourGraphic.MOUTH_OPENED){
-                        Toast.makeText(requireActivity(), "Вас не слышно", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireActivity(), "Попробуйте открыть рот", Toast.LENGTH_SHORT).show()
-                    }
                 }
                 builder.append(str1)
             }
