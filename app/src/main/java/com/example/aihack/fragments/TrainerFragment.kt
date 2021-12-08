@@ -16,6 +16,7 @@ import com.example.aihack.utils.GridSpacingItemDecoration
 import com.example.aihack.utils.GsonParser
 
 class TrainerFragment : Fragment() {
+    private lateinit var recyclerView: RecyclerView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,10 +27,15 @@ class TrainerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.test_recycler_view)
+        recyclerView = view.findViewById<RecyclerView>(R.id.test_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 64, true))
         recyclerView.adapter = RecyclerViewAdapter()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUI()
     }
 
     inner class RecyclerViewAdapter :
@@ -76,5 +82,9 @@ class TrainerFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun updateUI() {
+        recyclerView.adapter = RecyclerViewAdapter()
     }
 }

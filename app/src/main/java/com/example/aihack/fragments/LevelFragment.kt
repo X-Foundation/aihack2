@@ -26,16 +26,22 @@ class LevelFragment : Fragment() {
         return inflater.inflate(R.layout.level_fragment, container, false)
     }
     private lateinit var blocked: String
+    private lateinit var recyclerView: RecyclerView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
         blocked = sharedPref.getString("blocked", "23").toString()
-        val recyclerView = view.findViewById<RecyclerView>(R.id.level_recycler_view)
+        recyclerView = view.findViewById<RecyclerView>(R.id.level_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
         recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 32, true))
         recyclerView.adapter = RecyclerViewAdapter()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateUI()
     }
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
         private val trainerList = Array(3) {i -> i + 1}
@@ -59,7 +65,6 @@ class LevelFragment : Fragment() {
                 val trainerLock = itemView.findViewById<ImageView>(R.id.lock)
                 val title = "Уровень " + test.level
                 trainerTitle.text = title
-                val xp = GsonParser.getInstance(requireActivity()).getAllXp()
                 val check = GsonParser.getInstance(requireActivity()).getAllXp() >= (test.level - 1) * 8 || test.level == 1
                 if(check)
                     trainerLock.visibility = View.INVISIBLE
@@ -72,5 +77,8 @@ class LevelFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun updateUI() {
+        recyclerView.adapter = RecyclerViewAdapter()
     }
 }
