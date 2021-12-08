@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aihack.R
 import com.example.aihack.activities.TestActivity
+import com.example.aihack.utils.GridSpacingItemDecoration
 
 class TrainerFragment : Fragment() {
     override fun onCreateView(
@@ -25,11 +26,12 @@ class TrainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.test_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(requireActivity(), 3)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 4, true))
         recyclerView.adapter = RecyclerViewAdapter()
     }
 
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
-        private val trainerList = arrayListOf("Уровень 1", "Уровень 2", "Уровень 3", "Уровень 4", "Уровень 5", "Уровень 6")
+        private val trainerList = Array(10) {i -> "Тест ${i+1}"}
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return RecyclerViewHolder(layoutInflater, parent)
