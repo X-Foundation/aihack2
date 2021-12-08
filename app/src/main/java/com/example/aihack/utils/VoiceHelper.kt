@@ -7,12 +7,11 @@ import android.os.Bundle
 import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 
 class VoiceHelper(
-    private val owner: FragmentActivity,
+    owner: FragmentActivity,
     private val onResult: (result: String) -> Unit
 ) {
     private var speechRecognizer: SpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(owner)
@@ -37,8 +36,7 @@ class VoiceHelper(
             override fun onError(i: Int) {}
             override fun onResults(bundle: Bundle) {
                 val data = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                Toast.makeText(owner, data!![0], Toast.LENGTH_LONG).show()
-                onResult(data[0])
+                onResult(data!![0])
             }
 
             override fun onPartialResults(bundle: Bundle) {}

@@ -3,11 +3,6 @@ package com.example.aihack.utils
 import android.graphics.*
 import com.google.mlkit.vision.face.Face
 import android.util.Log
-
-import android.R.attr.translateY
-
-import android.R.attr.translateX
-import com.example.aihack.fragments.TestFragment.Companion.TAG
 import com.google.mlkit.vision.face.FaceContour
 
 
@@ -57,11 +52,13 @@ class FaceContourGraphic(
         for (i in 0 until loverValues.size){
             diff.add(upperValues[i].x - loverValues[i].x)
         }
+        MOUTH_OPENED = diff.average() > 3
         Log.d("FDS", diff.average().toString())
     }
 
     companion object {
         private const val BOX_STROKE_WIDTH = 5.0f
+        var MOUTH_OPENED = false
     }
 
 }
