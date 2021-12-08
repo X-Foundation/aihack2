@@ -25,8 +25,8 @@ class TrainerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.test_recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(requireActivity(), 3)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 32, true))
+        recyclerView.layoutManager = GridLayoutManager(requireActivity(), 2)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 64, true))
         recyclerView.adapter = RecyclerViewAdapter()
     }
 

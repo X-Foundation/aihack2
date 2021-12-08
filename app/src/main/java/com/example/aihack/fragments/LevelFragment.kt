@@ -25,13 +25,13 @@ class LevelFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.level_recycler_view)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(2, 64, true))
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(1, 32, true))
         recyclerView.adapter = RecyclerViewAdapter()
 
     }
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
-        private val trainerList = Array(10) {i -> "Уровень ${i+1}"}
+        private val trainerList = Array(3) {i -> "Уровень ${i+1}"}
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return RecyclerViewHolder(layoutInflater, parent)
