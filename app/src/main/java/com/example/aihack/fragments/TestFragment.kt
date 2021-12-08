@@ -47,8 +47,9 @@ class TestFragment : Fragment() {
         val textView = view.findViewById<TextView>(R.id.textView2)
         val level = requireActivity().intent.getIntExtra("level", 0)
         val testNumber = requireActivity().intent.getIntExtra("test", 0)
-        val testText = GsonParser.instance.getTest(level, testNumber)
+        val testText = GsonParser.getInstance(requireActivity()).getTest(level, testNumber)
         textView.text = testText
+        GsonParser.getInstance(requireActivity()).addXp(level, testNumber, 1, requireActivity())
         val button = view.findViewById<Button>(R.id.button)
         voiceHelper = VoiceHelper(requireActivity(), onResult = {
             val recognized = it.lowercase().replace('с', 'c').replace('c', 'с')
@@ -82,7 +83,7 @@ class TestFragment : Fragment() {
                     .addSizes(Size(12))
                     .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
                     .streamFor(300, 5000L)
-                GsonParser.instance.addXp(level, testNumber, counter, requireActivity())
+                GsonParser.getInstance(requireActivity()).addXp(level, testNumber, counter, requireActivity())
             }
         })
         button.setOnClickListener {

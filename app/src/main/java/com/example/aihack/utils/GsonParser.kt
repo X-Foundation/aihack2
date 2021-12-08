@@ -10,11 +10,11 @@ import com.google.gson.stream.JsonReader
 import android.content.SharedPreferences.Editor
 
 
-class GsonParser {
+class GsonParser(activity: FragmentActivity) {
     private lateinit var testList: TestList
     private lateinit var xpList: XpList
     
-    fun init(activity: FragmentActivity){
+    init {
         val gson = Gson()
         val reader = JsonReader(activity.assets.open("tests.json").bufferedReader())
         testList = gson.fromJson(reader, TestList::class.java)
@@ -56,6 +56,11 @@ class GsonParser {
     }
 
     companion object {
-        val instance = GsonParser()
+        @Volatile private var INSTANCE: GsonParser? = null
+
+        fun getInstance(activity: FragmentActivity): GsonParser =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: GsonParser(activity).also { INSTANCE = it }
+            }
     }
 }
