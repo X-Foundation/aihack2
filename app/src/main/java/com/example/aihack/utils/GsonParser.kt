@@ -7,6 +7,8 @@ import com.example.aihack.models.Xp
 import com.example.aihack.models.XpList
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
+import android.content.SharedPreferences.Editor
+
 
 class GsonParser {
     private lateinit var testList: TestList
@@ -16,7 +18,7 @@ class GsonParser {
         val gson = Gson()
         val reader = JsonReader(activity.assets.open("tests.json").bufferedReader())
         testList = gson.fromJson(reader, TestList::class.java)
-        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+        val sharedPref = activity.applicationContext.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
         val prefs = sharedPref.getString("xp", "{'list': []}").toString()
         xpList = gson.fromJson(prefs, XpList::class.java)
     }
@@ -47,11 +49,10 @@ class GsonParser {
     private fun saveXp(xpList: XpList, activity: FragmentActivity) {
         val gson = Gson()
         val json: String = gson.toJson(xpList)
-        val sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putString("xp", json)
-            commit()
-        }
+        val sharedPref = activity.applicationContext.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
+        val editor: Editor = sharedPref.edit()
+        editor.putString("xp", json)
+        editor.apply()
     }
 
     companion object {
