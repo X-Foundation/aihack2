@@ -19,6 +19,9 @@ import android.text.SpannableString
 
 import android.text.SpannableStringBuilder
 import com.example.aihack.utils.GsonParser
+import nl.dionsegijn.konfetti.KonfettiView
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 
 
 class TestFragment : Fragment() {
@@ -52,12 +55,14 @@ class TestFragment : Fragment() {
             val split1 = recognized.split(' ')
             val splitRight = testText!!.split(' ')
             val builder = SpannableStringBuilder()
+            var counter = 0
             for ((idx, i) in splitRight.withIndex()) {
                 var text = i
                 if (idx != splitRight.size - 1)
                     text = "$i "
                 val str1 = SpannableString(text)
                 if (i in split1) {
+                    counter++
                     str1.setSpan(ForegroundColorSpan(Color.GREEN), 0, str1.length, 0)
                 } else {
                     str1.setSpan(ForegroundColorSpan(Color.RED), 0, str1.length, 0)
@@ -65,6 +70,19 @@ class TestFragment : Fragment() {
                 builder.append(str1)
             }
             textView.setText(builder, TextView.BufferType.SPANNABLE)
+            if (counter == splitRight.size) {
+                val konfettiView = view.findViewById<KonfettiView>(R.id.viewKonfetti)
+                konfettiView.build()
+                    .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                    .setDirection(0.0, 359.0)
+                    .setSpeed(1f, 5f)
+                    .setFadeOutEnabled(true)
+                    .setTimeToLive(2000L)
+                    .addShapes(Shape.Square, Shape.Circle)
+                    .addSizes(Size(12))
+                    .setPosition(-50f, konfettiView.width + 50f, -50f, -50f)
+                    .streamFor(300, 5000L)
+            }
         })
         button.setOnClickListener {
             voiceHelper.startRecording()

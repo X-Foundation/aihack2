@@ -9,11 +9,12 @@
         <entry key="app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout-v23/level_gridview_item.xml" value="0.42213363222089617" />
         <entry key="app/src/main/res/layout-v23/trainer_recycler_view_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-v28/trainer_recycler_view_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_face_detection.xml" value="0.10746720484359233" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/level_fragment.xml" value="0.28792569659442724" />
         <entry key="app/src/main/res/layout/level_gridview_item.xml" value="0.2463768115942029" />
-        <entry key="app/src/main/res/layout/test_fragment.xml" value="0.3378642136757234" />
+        <entry key="app/src/main/res/layout/test_fragment.xml" value="0.34160048172008084" />
         <entry key="app/src/main/res/layout/trainer_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/trainer_recycler_view_item.xml" value="0.8870967741935484" />
       </map>

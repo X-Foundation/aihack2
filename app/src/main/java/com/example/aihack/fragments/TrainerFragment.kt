@@ -51,7 +51,7 @@ class TrainerFragment : Fragment() {
             RecyclerView.ViewHolder(inflater.inflate(R.layout.trainer_recycler_view_item, viewGroup, false)){
                 fun bind(test: Test) {
                     val trainerTitle = itemView.findViewById<TextView>(R.id.test_title)
-                    val title = "Тест" + test.test
+                    val title = "Тест " + test.test
                     trainerTitle.text = title
                     itemView.setOnClickListener {
                         val intent = Intent(requireActivity(), TestActivity::class.java)

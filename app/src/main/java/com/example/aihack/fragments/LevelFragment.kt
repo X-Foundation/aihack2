@@ -50,7 +50,7 @@ class LevelFragment : Fragment() {
             RecyclerView.ViewHolder(inflater.inflate(R.layout.level_gridview_item, viewGroup, false)){
             fun bind(test: Test) {
                 val trainerTitle = itemView.findViewById<TextView>(R.id.level_title)
-                val title = "Уровень" + test.level
+                val title = "Уровень " + test.level
                 trainerTitle.text = title
                 itemView.setOnClickListener {
                     val intent = Intent(requireActivity(), TrainerActivity::class.java)
