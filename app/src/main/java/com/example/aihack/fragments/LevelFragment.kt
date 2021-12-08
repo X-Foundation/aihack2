@@ -58,7 +58,8 @@ class LevelFragment : Fragment() {
                 val trainerLock = itemView.findViewById<ImageView>(R.id.lock)
                 val title = "Уровень " + test.level
                 trainerTitle.text = title
-                trainerLock.visibility = (test.level.toString() in blocked).compareTo(false)
+                if(test.level.toString() !in blocked)
+                    trainerLock.visibility = View.INVISIBLE
                 itemView.setOnClickListener {
                     val intent = Intent(requireActivity(), TrainerActivity::class.java)
                     intent.putExtra("level", test.level)
