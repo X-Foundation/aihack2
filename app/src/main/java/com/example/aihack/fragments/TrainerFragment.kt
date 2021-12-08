@@ -26,7 +26,7 @@ class TrainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recyclerView = view.findViewById<RecyclerView>(R.id.test_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(requireActivity(), 3)
-        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 4, true))
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(3, 32, true))
         recyclerView.adapter = RecyclerViewAdapter()
     }
 
