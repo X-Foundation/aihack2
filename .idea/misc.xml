@@ -4,11 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2869791666666667" />
+        <entry key="app/src/main/res/drawable/custom_butt.xml" value="0.27447916666666666" />
+        <entry key="app/src/main/res/layout-v23/trainer_recycler_view_item.xml" value="0.1231079717457114" />
         <entry key="app/src/main/res/layout/activity_face_detection.xml" value="0.10746720484359233" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/layout/test_fragment.xml" value="0.25" />
         <entry key="app/src/main/res/layout/trainer_fragment.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/trainer_recycler_view_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/trainer_recycler_view_item.xml" value="0.8870967741935484" />
       </map>
     </option>
   </component>
