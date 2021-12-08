@@ -2,7 +2,6 @@ package com.example.aihack.utils
 
 import android.graphics.*
 import com.google.mlkit.vision.face.Face
-import com.google.mlkit.vision.face.FaceContour
 
 class FaceContourGraphic(
     overlay: GraphicOverlay,

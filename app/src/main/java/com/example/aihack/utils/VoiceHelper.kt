@@ -49,9 +49,6 @@ class VoiceHelper(
         speechRecognizer.startListening(speechRecognizerIntent)
     }
 
-    fun stopRecording() {
-        speechRecognizer.stopListening()
-    }
 
     companion object {
         private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
