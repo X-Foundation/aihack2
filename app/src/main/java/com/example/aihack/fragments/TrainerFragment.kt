@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aihack.R
 import com.example.aihack.activities.TestActivity
@@ -24,8 +23,8 @@ class TrainerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        val recyclerView = view.findViewById<RecyclerView>(R.id.test_recycler_view)
+        recyclerView.layoutManager = GridLayoutManager(requireActivity(), 3)
         recyclerView.adapter = RecyclerViewAdapter()
     }
 
@@ -47,7 +46,7 @@ class TrainerFragment : Fragment() {
         inner class RecyclerViewHolder(inflater: LayoutInflater, viewGroup: ViewGroup) :
             RecyclerView.ViewHolder(inflater.inflate(R.layout.trainer_recycler_view_item, viewGroup, false)){
                 fun bind(title: String) {
-                    val trainerTitle = itemView.findViewById<TextView>(R.id.trainer_title)
+                    val trainerTitle = itemView.findViewById<TextView>(R.id.test_title)
                     trainerTitle.text = title
                     itemView.setOnClickListener {
                         val intent = Intent(requireActivity(), TestActivity::class.java)

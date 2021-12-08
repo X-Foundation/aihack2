@@ -38,7 +38,19 @@ class MainFragment : Fragment() {
 
     private fun setFragment(fragment: Fragment) {
         val fragmentManager = requireActivity().supportFragmentManager
-        fragmentManager.beginTransaction().apply {
+        val transaction = fragmentManager.beginTransaction()
+        if (fragment == LevelFragment())
+            transaction
+                .setCustomAnimations(
+                    R.anim.enter_from_left,
+                    R.anim.exit_to_left,
+                )
+        else
+            transaction.setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_left,
+            )
+        transaction.apply {
             replace(R.id.frame_container, fragment)
         }.commit()
     }
