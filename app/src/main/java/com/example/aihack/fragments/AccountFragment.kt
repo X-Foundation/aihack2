@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.aihack.R
 import com.example.aihack.utils.GsonParser
+import com.suke.widget.SwitchButton
 import params.com.stepprogressview.StepProgressView
 
 class AccountFragment : Fragment() {
@@ -29,5 +31,20 @@ class AccountFragment : Fragment() {
         val xpTextView = view.findViewById<TextView>(R.id.xp_textView)
         val xp = GsonParser.getInstance(requireActivity()).getAllXp().toString() + "/83"
         xpTextView.text = xp
+        val childImageView = view.findViewById<ImageView>(R.id.child_imageView)
+        val adultImageView = view.findViewById<ImageView>(R.id.adult_imageView)
+        val switchButton = view.findViewById<SwitchButton>(R.id.switch_button)
+        switchButton.setOnCheckedChangeListener { _, isChecked ->
+            when(isChecked) {
+                true -> {
+                    childImageView.visibility = View.VISIBLE
+                    adultImageView.visibility = View.INVISIBLE
+                }
+                false -> {
+                    childImageView.visibility = View.INVISIBLE
+                    adultImageView.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 }
