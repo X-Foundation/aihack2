@@ -58,8 +58,8 @@ open class GraphicOverlay(context: Context?, attrs: AttributeSet?) :
 
             val pointList = ArrayList<ArrayList<Float>>()
             for (point in points) {
-                val x = point.x * scale + offsetX
-                val y = point.y * scale + offsetY
+                val x = point.x * scale + offsetX // - 200
+                val y = point.y * scale + offsetY // + 200
                 pointList.add(arrayListOf(x, y))
 
             }

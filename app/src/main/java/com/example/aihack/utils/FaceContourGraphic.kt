@@ -49,10 +49,11 @@ class FaceContourGraphic(
         val loverValues = face.getContour(FaceContour.LOWER_LIP_TOP)!!.points
         val upperValues = face.getContour(FaceContour.UPPER_LIP_BOTTOM)!!.points
         val diff = arrayListOf<Float>()
-        for (i in 0 until loverValues.size){
-            diff.add(upperValues[i].x - loverValues[i].x)
+        for (i in 0 until loverValues.size) {
+            diff.add(loverValues[i].y - upperValues[i].y)
         }
-        MOUTH_OPENED = diff.average() > 3
+        if (diff.average() > 2)
+            MOUTH_OPENED = true
         Log.d("FDS", diff.average().toString())
     }
 

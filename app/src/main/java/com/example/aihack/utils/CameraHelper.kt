@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
+import android.view.Surface
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -72,16 +73,18 @@ class CameraHelper(
 
     @androidx.camera.core.ExperimentalGetImage
     private fun startCamera() {
+        // viewFinder.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder()
+                // .setTargetRotation(Surface.ROTATION_270)
                 .build()
                 .also {
                     it.setSurfaceProvider(viewFinder.surfaceProvider)
                 }
             val imageAnalyzer = ImageAnalysis.Builder()
+                // .setTargetRotation(Surface.ROTATION_270)
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                 .build()
                 .also { it.setAnalyzer(cameraExecutor, framesAnalyzer()) }
