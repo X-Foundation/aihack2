@@ -50,6 +50,23 @@ class GsonParser(activity: FragmentActivity) {
         return counter
     }
 
+    fun getAllLevelXp(level: Int): Int {
+        var counter = 0
+        for (t in xpList.list) {
+            if(t.level == level)
+            counter += t.xp
+        }
+        return counter
+    }
+
+    fun getAllPossibleLevelXp(level: Int): Int {
+        var counter = 0
+        for (t in testList.list) {
+            counter += t.text.split(' ').size
+        }
+        return counter
+    }
+
     fun addXp(level: Int, test: Int, xp: Int, activity: FragmentActivity) {
         var flag = false
         for (element in xpList.list)
