@@ -63,4 +63,12 @@
         app:srcCompat="@drawable/_1489338_removebg_preview"
         tools:layout_editor_absoluteX="-16dp"
         tools:layout_editor_absoluteY="240dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/man_casual_dressed_business_vector_15372247_removebg_preview"
+        tools:layout_editor_absoluteX="118dp"
+        tools:layout_editor_absoluteY="305dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
