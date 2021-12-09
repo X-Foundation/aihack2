@@ -27,7 +27,7 @@ class AccountFragment : Fragment() {
         levelTextView.text = level
         xpProgressBar.currentProgress = GsonParser.getInstance(requireActivity()).getAllXp()
         val xpTextView = view.findViewById<TextView>(R.id.xp_textView)
-        val xp = GsonParser.getInstance(requireActivity()).getAllXp().toString() + "/81"
+        val xp = GsonParser.getInstance(requireActivity()).getAllXp().toString() + "/83"
         xpTextView.text = xp
     }
 }
