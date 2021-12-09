@@ -62,6 +62,7 @@ class GsonParser(activity: FragmentActivity) {
     fun getAllPossibleLevelXp(level: Int): Int {
         var counter = 0
         for (t in testList.list) {
+            if(t.level == level)
             counter += t.text.split(' ').size
         }
         return counter
