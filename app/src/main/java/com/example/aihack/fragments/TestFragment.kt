@@ -106,14 +106,6 @@ class TestFragment : Fragment() {
         cameraHelper.stop()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        cameraHelper.onRequestPermissionsResult(requestCode)
-    }
-
     companion object {
         const val TAG = "CameraXDemo"
     }

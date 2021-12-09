@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
@@ -33,8 +34,37 @@ class CameraHelper(
         if (allPermissionsGranted()) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(owner, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+            permReqLauncher.launch(REQUIRED_PERMISSIONS)
         }
+    }
+
+    @SuppressLint("UnsafeOptInUsageError")
+    private val permReqLauncher =
+        owner.registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions.entries.all {
+                it.value == true
+            }
+            if (granted) {
+                startCamera()
+            } else {
+                Toast.makeText(
+                    context,
+                    "Permissions not granted by the user.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    private fun allPermissionsGranted(): Boolean {
+        for (permission in REQUIRED_PERMISSIONS) {
+            if (ContextCompat.checkSelfPermission(
+                    context, permission
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return false
+            }
+        }
+        return true
     }
 
     fun stop() {
@@ -72,37 +102,8 @@ class CameraHelper(
         return FaceContourDetectionProcessor(overlay)
     }
 
-    @SuppressLint("UnsafeOptInUsageError")
-    fun onRequestPermissionsResult(
-        requestCode: Int
-    ) {
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(
-                    context,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
-
-    private fun allPermissionsGranted(): Boolean {
-        for (permission in REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(
-                    context, permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return false
-            }
-        }
-        return true
-    }
-
     companion object {
-        const val REQUEST_CODE_PERMISSIONS = 42
-        val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        val REQUIRED_PERMISSIONS =
+            arrayOf(Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO)
     }
 }
