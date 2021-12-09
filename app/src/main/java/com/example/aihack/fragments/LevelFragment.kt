@@ -43,7 +43,7 @@ class LevelFragment : Fragment() {
 
     inner class RecyclerViewAdapter :
         RecyclerView.Adapter<RecyclerViewAdapter.RecyclerViewHolder>() {
-        private val trainerList = Array(3) { i -> i + 1 }
+        private val trainerList = Array(4) { i -> i + 1 }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             return RecyclerViewHolder(layoutInflater, parent)
@@ -72,7 +72,7 @@ class LevelFragment : Fragment() {
                 val title = "Уровень " + test.level
                 trainerTitle.text = title
                 val check = GsonParser.getInstance(requireActivity())
-                    .getAllXp() >= (test.level - 1) * 8 || test.level == 1
+                    .getAllXp() >= (test.level - 1) * 8 || test.level == 1 || test.level == 4
                 if (check) {
                     trainerLock.visibility = View.INVISIBLE
                     xpTitle.text = ("${

@@ -40,6 +40,22 @@ class AccountFragment : Fragment() {
             activity?.applicationContext?.getSharedPreferences("superPrefs", Context.MODE_PRIVATE)
         val prefs = sharedPref?.getInt("mode", 0)
         switchButton.isChecked = prefs == 1
+        when (prefs == 1) {
+            true -> {
+                childImageView.visibility = View.VISIBLE
+                adultImageView.visibility = View.INVISIBLE
+                val editor: SharedPreferences.Editor? = sharedPref?.edit()
+                editor?.putInt("mode", 1)
+                editor?.apply()
+            }
+            false -> {
+                childImageView.visibility = View.INVISIBLE
+                adultImageView.visibility = View.VISIBLE
+                val editor: SharedPreferences.Editor? = sharedPref?.edit()
+                editor?.putInt("mode", 0)
+                editor?.apply()
+            }
+        }
         switchButton.setOnCheckedChangeListener { _, isChecked ->
             when (isChecked) {
                 true -> {

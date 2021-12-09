@@ -4,6 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +16,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.aihack.R
 import com.example.aihack.utils.CameraHelper
-import com.example.aihack.utils.VoiceHelper
-import android.text.style.ForegroundColorSpan
-
-import android.text.SpannableString
-
-import android.text.SpannableStringBuilder
 import com.example.aihack.utils.FaceContourGraphic
 import com.example.aihack.utils.GsonParser
+import com.example.aihack.utils.VoiceHelper
 import nl.dionsegijn.konfetti.KonfettiView
 import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
+import java.util.*
 
 
 class TestFragment : Fragment() {
@@ -42,6 +42,8 @@ class TestFragment : Fragment() {
         return inflater.inflate(R.layout.test_fragment, container, false)
     }
 
+    private var textToSpeechSystem: TextToSpeech? = null
+
     @SuppressLint("CutPasteId")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,6 +54,7 @@ class TestFragment : Fragment() {
         val testText = GsonParser.getInstance(requireActivity()).getTest(level, testNumber)
         textView.text = testText
         val button = view.findViewById<Button>(R.id.button)
+        val button2 = view.findViewById<Button>(R.id.button2)
         voiceHelper = VoiceHelper(requireActivity(), onResult = {
             val recognized = it.lowercase().replace('с', 'c').replace('c', 'с')
             val split1 = recognized.split(' ')
@@ -89,6 +92,15 @@ class TestFragment : Fragment() {
         })
         button.setOnClickListener {
             voiceHelper.startRecording()
+        }
+        button2.setOnClickListener {
+            textToSpeechSystem = TextToSpeech(context
+            ) { status ->
+                if (status == TextToSpeech.SUCCESS) {
+                    textToSpeechSystem?.language = Locale("RU_ru")
+                    textToSpeechSystem?.speak(testText, TextToSpeech.QUEUE_ADD, null)
+                }
+            }
         }
         cameraHelper = CameraHelper(
             owner = requireActivity(),
