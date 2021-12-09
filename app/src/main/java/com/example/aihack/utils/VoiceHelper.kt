@@ -1,6 +1,5 @@
 package com.example.aihack.utils
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 
 class VoiceHelper(
@@ -50,11 +48,5 @@ class VoiceHelper(
     @SuppressLint("RestrictedApi")
     fun startRecording() {
         speechRecognizer.startListening(speechRecognizerIntent)
-    }
-
-
-    companion object {
-        private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
-        const val REQUEST_RECORD_AUDIO_PERMISSION = 200
     }
 }
