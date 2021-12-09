@@ -69,7 +69,10 @@ class LevelFragment : Fragment() {
                 val trainerTitle = itemView.findViewById<TextView>(R.id.level_title)
                 val trainerLock = itemView.findViewById<ImageView>(R.id.lock)
                 val xpTitle = itemView.findViewById<TextView>(R.id.xpLevelTextView)
-                val title = "Уровень " + test.level
+                val title: String = if(test.level == 4)
+                    "Упражнения с буквой 'Р'"
+                else
+                    "Уровень " + test.level
                 trainerTitle.text = title
                 val check = GsonParser.getInstance(requireActivity())
                     .getAllXp() >= (test.level - 1) * 8 || test.level == 1 || test.level == 4
