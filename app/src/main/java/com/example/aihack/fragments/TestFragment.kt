@@ -51,7 +51,6 @@ class TestFragment : Fragment() {
         val testNumber = requireActivity().intent.getIntExtra("test", 0)
         val testText = GsonParser.getInstance(requireActivity()).getTest(level, testNumber)
         textView.text = testText
-        // GsonParser.getInstance(requireActivity()).addXp(level, testNumber, 1, requireActivity())
         val button = view.findViewById<Button>(R.id.button)
         voiceHelper = VoiceHelper(requireActivity(), onResult = {
             val recognized = it.lowercase().replace('с', 'c').replace('c', 'с')

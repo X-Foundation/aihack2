@@ -19,10 +19,6 @@ class VoiceHelper(
     private var speechRecognizerIntent: Intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
 
     init {
-//        ActivityCompat.requestPermissions(
-//            owner, permissions,
-//            REQUEST_RECORD_AUDIO_PERMISSION
-//        )
         speechRecognizerIntent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
