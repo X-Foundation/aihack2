@@ -18,7 +18,6 @@ import android.text.style.ForegroundColorSpan
 import android.text.SpannableString
 
 import android.text.SpannableStringBuilder
-import android.widget.Toast
 import com.example.aihack.utils.FaceContourGraphic
 import com.example.aihack.utils.GsonParser
 import nl.dionsegijn.konfetti.KonfettiView
